@@ -5,4 +5,4 @@ import { fetchSuccessful, fetchFailed } from "./components/action";
 const store = createStore(reducerFunc);
 
 store.dispatch(fetchSuccessful);
-store.dispatch(fetchFaileda);
+store.dispatch(fetchFailed);

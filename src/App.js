@@ -1,5 +1,5 @@
 import "./App.css";
-import * as actions from "./actions";
+import * as actions from "./components/actions";
 import "./components/action";
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
     unrealizedPandL: "",
     percentReturn: 0,
   };
-  export const reducerFunc = (state = initialState, action) => {
+  const reducerFunc = (state = initialState, action) => {
     switch (action.type) {
       case actions.SUCCESSFUL:
         return {
@@ -22,31 +22,25 @@ function App() {
           price: action.payload.price,
           avgCost: action.payload.avgCost,
           investedAmount: action.payload.investedAmount,
-          percentOfPortfolio: action.payload[percentOfPortfolio],
+          percentOfPortfolio: action.payload.percentOfPortfolio,
           unrealizedPandL: action.payload.unrealizedPandL,
           percentReturn: action.payload.percentReturn,
         };
       case actions.FAILED:
         return [...state, { error: action.payload.error }];
-      default:
-        [...state];
     }
   };
 
-  useEffect(() => {
-    axios
-      .get("https://demo8900446.mockable.io/portfoliochartredux")
-      .then((res) => {
-        const data = res.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
+  console.log("scrip " + initialState.scrip);
+  console.log("quantity " + initialState.quantity);
+  console.log("price " + initialState.price);
+  console.log("avgCost " + initialState.avgCost);
+  console.log("investedAmount " + initialState.investedAmount);
+  console.log("percentOfPortfolio " + initialState.percentOfPortfolio);
+  console.log("unrealizedPandL " + initialState.unrealizedPandL);
+  console.log("percentreturn " + initialState.percentReturn);
 
-  return <div className="App">
-    
-  </div>;
+  return <div className="App"></div>;
 }
 
 export default App;
