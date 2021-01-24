@@ -5,7 +5,6 @@ import threelines from "../assets/threelines.png";
 function ShowPrice() {
   return (
     <div className="main1">
-      {console.log("==")}
       <div className="grid">
         <div className="image">
           <img src={threelines} width="100%" alt="ThreeLines" />

@@ -28,7 +28,13 @@ span {
 }
 
 .progressBar {
-  width: 35%;
+  /* width: 35%; */
   fill: green;
   background-color: green;
+}
+
+.prog {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0px;
 }

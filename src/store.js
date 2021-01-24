@@ -1,8 +1,15 @@
-import { reducerFunc } from "./App";
-import redux, { createStore } from "redux";
-import { fetchSuccessful, fetchFailed } from "./components/action";
+import reducerFunc from "./reducers/stockReducer";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 
-const store = createStore(reducerFunc);
+const initialState = {};
 
-store.dispatch(fetchSuccessful);
-store.dispatch(fetchFailed);
+const middleware = [thunk];
+
+const store = createStore(
+  reducerFunc,
+  initialState,
+  applyMiddleware(...middleware)
+);
+
+export default store;

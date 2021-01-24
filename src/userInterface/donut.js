@@ -7,34 +7,34 @@ function Donut() {
       <div className="portfolio">Portfolio</div>
       <div className="donutParent">
         <span className="innerDonut">
-          <svg width="100%" height="100%" viewBox="0 0 42 42" class="donut">
+          <svg width="100%" height="100%" viewBox="0 0 42 42" className="donut">
             <circle
-              class="donut-hole"
+              className="donut-hole"
               cx="21"
               cy="21"
               r="15.91549430918954"
               fill="#fff"
             ></circle>
             <circle
-              class="donut-ring"
+              className="donut-ring"
               cx="21"
               cy="21"
               r="15.91549430918954"
               fill="transparent"
               stroke="#3acfe3"
-              stroke-width="5"
+              strokeWidth="5"
             ></circle>
 
             <circle
-              class="donut-segment"
+              className="donut-segment"
               cx="21"
               cy="21"
               r="15.91549430918954"
               fill="transparent"
               stroke="#dba315"
-              stroke-width="5"
-              stroke-dasharray="60 40"
-              stroke-dashoffset="25"
+              strokeWidth="5"
+              strokeDasharray="60 40"
+              strokeDashoffset="25"
             ></circle>
           </svg>
         </span>

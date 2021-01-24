@@ -13,15 +13,17 @@ function MarketValue() {
         <span id="portfolioColor">%&nbsp;of&nbsp;Portfolio&nbsp;value</span>
         <span>40%</span>
       </div>
-      <div class="progress" style={{ height: "5px", marginTop: "2px" }}>
-        <div
-          class="progress-bar"
-          style={{
-            width: "70%",
-            height: "5px",
-            backgroundColor: "green",
-          }}
-        ></div>
+      <div>
+        <div className="progress" style={{ height: "5px", marginTop: "2px" }}>
+          <div
+            className="progress-bar"
+            style={{
+              width: "70%",
+              height: "5px",
+              backgroundColor: "green",
+            }}
+          ></div>
+        </div>
       </div>
     </div>
   );
