@@ -1,9 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./css/donut.css";
+import { connect } from "react-redux";
+import { fetchStocks } from "../actions/postActions";
 
-function Donut() {
+function Donut(props) {
+  useEffect(() => {
+    props.fetchStocks();
+  }, []);
+  let stock = [];
+  let mutualFund = [],
+    etfs = [];
+  let i = 0,
+    totalOfMutualFunds = 0,
+    totalOfEtfs = 0;
+
+  if (props.stocks !== undefined) {
+    stock = props.stocks.map((data) => {
+      if (i < 3) {
+        mutualFund.push(data.percentOfPortfolio);
+        i = i + 1;
+      } else {
+        etfs.push(data.percentOfPortfolio);
+      }
+    });
+  }
+  totalOfMutualFunds = mutualFund.reduce(function (a, b) {
+    return a + b;
+  }, 0);
+  totalOfEtfs = etfs.reduce(function (a, b) {
+    return a + b;
+  }, 0);
+
+  console.log("Mutual funds", totalOfMutualFunds);
+
   return (
-    <div>
+    <div className="overAll">
       <div className="portfolio">Portfolio</div>
       <div className="donutParent">
         <span className="innerDonut">
@@ -33,18 +64,56 @@ function Donut() {
               fill="transparent"
               stroke="#dba315"
               strokeWidth="5"
-              strokeDasharray="60 40"
+              strokeDasharray={totalOfMutualFunds
+                .toString()
+                .concat(" ", totalOfEtfs)}
               strokeDashoffset="25"
             ></circle>
           </svg>
         </span>
         <span className="headings">
-          <div>Mutual&nbsp;Funds</div>
-          <div>ETFs</div>
+          <div>
+            <span>
+              <svg width="6" height="6">
+                <rect
+                  width="6"
+                  height="6"
+                  style={{
+                    fill: "#dba315",
+                    strokeWidth: 3,
+                  }}
+                />
+                Sorry, your browser does not support inline SVG.
+              </svg>
+              &nbsp;
+              <span>Mutual&nbsp;Funds</span>
+            </span>
+          </div>
+          <span>
+            <svg width="6" height="6">
+              <rect
+                width="6"
+                height="6"
+                style={{
+                  fill: "#3acfe3",
+                  strokeWidth: 3,
+                }}
+              />
+              Sorry, your browser does not support inline SVG.
+            </svg>
+          </span>
+          &nbsp;
+          <span>ETFs</span>
         </span>
       </div>
     </div>
   );
 }
 
-export default Donut;
+const mapStateToProps = (state) => {
+  return {
+    stocks: state.stocksData,
+  };
+};
+
+export default connect(mapStateToProps, { fetchStocks })(Donut);

@@ -9,41 +9,48 @@ import { fetchStocks } from "../actions/postActions";
 function GeneralQuantity(props) {
   useEffect(() => {
     props.fetchStocks();
-    console.log(props.fetchStocks);
-  }, [props]);
-  return (
-    <div className="main2">
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              <img src={databases} alt="quantity" />
-            </td>
-            <td className="heading">Quantity</td>
-            <td>150</td>
-          </tr>
-          <tr>
-            <td>
-              <img src={at} alt="@" />
-            </td>
-            <td className="heading">Avg. Cost</td>
-            <td>$44.9</td>
-          </tr>
-          <tr>
-            <td>
-              <img src={dollar} alt="dollar Bill" />
-            </td>
-            <td className="heading">Invested&nbsp;Amt</td>
-            <td>$6736.98</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
+  }, []);
+  let stock = [];
+
+  if (props.stocks !== undefined) {
+    stock = props.stocks.map((data) => (
+      <div className="main2" key={data.scrip}>
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <img src={databases} alt="quantity" />
+              </td>
+              <td className="heading">Quantity</td>
+              <td>{data.quantity}</td>
+            </tr>
+            <tr>
+              <td>
+                <img src={at} alt="@" />
+              </td>
+              <td className="heading">Avg. Cost</td>
+              <td>{data.avgCost}</td>
+            </tr>
+            <tr>
+              <td>
+                <img src={dollar} alt="dollar Bill" />
+              </td>
+              <td className="heading">Invested&nbsp;Amt</td>
+              <td>{data.investedAmount}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    ));
+  }
+
+  return <>{stock}</>;
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  return {
+    stocks: state.stocksData,
+  };
 };
 
-export default connect(mapStateToProps)(GeneralQuantity);
+export default connect(mapStateToProps, { fetchStocks })(GeneralQuantity);

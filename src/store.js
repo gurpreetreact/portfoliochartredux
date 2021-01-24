@@ -1,4 +1,4 @@
-import reducerFunc from "./reducers/stockReducer";
+import stockReducer from "./reducers/stockReducer";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 
@@ -7,7 +7,7 @@ const initialState = {};
 const middleware = [thunk];
 
 const store = createStore(
-  reducerFunc,
+  stockReducer,
   initialState,
   applyMiddleware(...middleware)
 );

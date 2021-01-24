@@ -1,70 +1,154 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./css/unrealizedPL.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import arrowUpGreen from "../assets/greenUpArrow.png";
 import arrowDownRed from "../assets/redArrowDown.png";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { connect } from "react-redux";
+import { fetchStocks } from "../actions/postActions";
 
-function UnrealizedPL() {
-  return (
-    <div className="main4">
-      <div className="column">
-        <span>Unrealized&nbsp;P/L</span>
-        <span>$2805.58</span>
-      </div>
-      <div className="column">
-        <span id="portfolioColor">%&nbsp;Return</span>
+function UnrealizedPL(props) {
+  useEffect(() => {
+    props.fetchStocks();
+  }, []);
+  let stock = [];
+  let arrow;
+  let bar;
+  let percentReturn;
+  if (props.stocks !== undefined) {
+    stock = props.stocks.map(
+      (data) => (
+        (arrow =
+          data.percentReturn > 0 ? (
+            <span>
+              <img src={arrowUpGreen} alt="arrowUpGreen" />
+            </span>
+          ) : data.percentReturn === 0 ? (
+            <span></span>
+          ) : (
+            <span>
+              <img src={arrowDownRed} alt="arrowDownRed" />
+            </span>
+          )),
+        (bar =
+          data.percentReturn > 0 ? (
+            <div className="prog">
+              <div>
+                <div
+                  className="progress"
+                  style={{
+                    direction: "rtl",
+                    borderRadius: "0px",
+                    height: "5px",
+                    marginTop: "2px",
+                  }}
+                >
+                  <div
+                    className="progress-bar"
+                    style={{
+                      width: "0%",
+                      height: "5px",
+                      backgroundColor: "red",
+                    }}
+                  ></div>
+                </div>
+              </div>
+              <div>
+                <div
+                  className="progress"
+                  style={{
+                    borderRadius: "0px",
+                    height: "5px",
+                    marginTop: "2px",
+                  }}
+                >
+                  <div
+                    className="progress-bar"
+                    style={{
+                      width: data.percentReturn + "%",
+                      height: "5px",
+                      backgroundColor: "green",
+                    }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="prog">
+              <div>
+                <div
+                  className="progress"
+                  style={{
+                    direction: "rtl",
+                    borderRadius: "0px",
+                    height: "5px",
+                    marginTop: "2px",
+                  }}
+                >
+                  <div
+                    className="progress-bar"
+                    style={{
+                      width: data.percentReturn.toString().split("-")[1] + "%",
+                      height: "5px",
+                      backgroundColor: "red",
+                    }}
+                  ></div>
+                </div>
+              </div>
+              <div>
+                <div
+                  className="progress"
+                  style={{
+                    borderRadius: "0px",
+                    height: "5px",
+                    marginTop: "2px",
+                  }}
+                >
+                  <div
+                    className="progress-bar"
+                    style={{
+                      width: "0%",
+                      height: "5px",
+                      backgroundColor: "green",
+                    }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+          )),
+        (
+          <div className="main4" key={stock.scrip}>
+            <div className="column">
+              <span>Unrealized&nbsp;P/L</span>
+              <span>{data.unrealizedPandL}</span>
+            </div>
+            <div className="column">
+              <span id="portfolioColor">%&nbsp;Return</span>
 
-        <span>
-          <span>
-            <img src={arrowUpGreen} alt="arrowUpGreen" />
-          </span>
-          <span>
-            <img src={arrowDownRed} alt="arrowDownRed" />
-          </span>
-          40%
-        </span>
-      </div>
-      <div className="prog">
-        <div>
-          <div
-            className="progress"
-            style={{
-              direction: "rtl",
-              borderRadius: "0px",
-              height: "5px",
-              marginTop: "2px",
-            }}
-          >
-            <div
-              className="progress-bar"
-              style={{
-                width: "70%",
-                height: "5px",
-                backgroundColor: "red",
-              }}
-            ></div>
+              <span>
+                {arrow}
+                {
+                  (percentReturn =
+                    data.percentReturn >= 0
+                      ? data.percentReturn
+                      : data.percentReturn.toString().split("-")[1])
+                }
+              </span>
+            </div>
+            {bar}
           </div>
-        </div>
-        <div>
-          <div
-            className="progress"
-            style={{ borderRadius: "0px", height: "5px", marginTop: "2px" }}
-          >
-            <div
-              className="progress-bar"
-              style={{
-                width: "70%",
-                height: "5px",
-                backgroundColor: "green",
-              }}
-            ></div>
-          </div>
-        </div>
-      </div>
-      {/* <div class="progress-bar" role="progressbar" style={{width: "50%", float:"left"}} aria-valuenow="10" aria-valuemin="0" aria-valuemax="50" ></div> */}
-    </div>
-  );
+        )
+      )
+    );
+  }
+
+  return <> {stock} </>;
 }
 
-export default UnrealizedPL;
+const mapStateToProps = (state) => {
+  return {
+    stocks: state.stocksData,
+  };
+};
+
+export default connect(mapStateToProps, { fetchStocks })(UnrealizedPL);

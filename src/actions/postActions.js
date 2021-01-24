@@ -9,10 +9,9 @@ export const fetchStocks = () => (dispatch) => {
       dispatch({
         type: FETCH_SUCCESSFUL,
         payload: stocks.map((data) => {
-          console.log("**", data);
           return data;
         }),
       });
     });
-    
+
 };

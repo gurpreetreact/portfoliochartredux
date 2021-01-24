@@ -1,32 +1,48 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./css/marketValue.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { connect } from "react-redux";
+import { fetchStocks } from "../actions/postActions";
 
-function MarketValue() {
-  return (
-    <div className="main3">
-      <div className="column">
-        <span>Market&nbsp;Value</span>
-        <span>$9542.56</span>
-      </div>
-      <div className="column">
-        <span id="portfolioColor">%&nbsp;of&nbsp;Portfolio&nbsp;value</span>
-        <span>40%</span>
-      </div>
-      <div>
-        <div className="progress" style={{ height: "5px", marginTop: "2px" }}>
-          <div
-            className="progress-bar"
-            style={{
-              width: "70%",
-              height: "5px",
-              backgroundColor: "green",
-            }}
-          ></div>
+function MarketValue(props) {
+  useEffect(() => {
+    props.fetchStocks();
+  }, []);
+  let stock = [];
+  if (props.stocks !== undefined) {
+    stock = props.stocks.map((data) => (
+      <div className="main3" key={data.scrip}>
+        <div className="column">
+          <span>Market&nbsp;Value</span>
+          <span>${data.price * data.quantity}</span>
+        </div>
+        <div className="column">
+          <span id="portfolioColor">%&nbsp;of&nbsp;Portfolio&nbsp;value</span>
+          <span>{data.percentOfPortfolio}%</span>
+        </div>
+        <div>
+          <div className="progress" style={{ height: "5px", marginTop: "2px" }}>
+            <div
+              className="progress-bar"
+              style={{
+                width: data.percentOfPortfolio + "%",
+                // "width: $(data.percentOfortfolio) + '%'",
+                height: "5px",
+                backgroundColor: "green",
+              }}
+            ></div>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    ));
+  }
+  return <>{stock} </>;
 }
 
-export default MarketValue;
+const mapStateToProps = (state) => {
+  return {
+    stocks: state.stocksData,
+  };
+};
+
+export default connect(mapStateToProps, { fetchStocks })(MarketValue);

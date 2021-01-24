@@ -13,36 +13,35 @@ import "./App.css";
 
 function App() {
   return (
-    
-      <React.StrictMode>
-        {/* <FetchSuccessful /> */}
-        <div className="parentFormat">
-          <div>
-            <span className="index">
-              <span className="padding" style={{ padding: "0px" }}>
-                <ShowPrice />
-              </span>
-              <span className="padding">
-                <GeneralQuantity />
-              </span>
-              <span className="padding">
-                <MarketValue />
-              </span>
-              <span className="padding">
-                <UnrealizedPL />
-              </span>
-              <span className="padding">
-                <BuySell />
-              </span>
+    <React.StrictMode>
+      {/* <FetchSuccessful /> */}
+      <div className="parentFormat">
+        <div>
+          <span className="index">
+            <span className="padding" style={{ padding: "0px" }}>
+              <ShowPrice />
             </span>
-          </div>
-          <div>
-            <span className="donut">
-              <Donut />
+            <span className="padding">
+              <GeneralQuantity />
             </span>
-          </div>
+            <span className="padding">
+              <MarketValue />
+            </span>
+            <span className="padding">
+              <UnrealizedPL />
+            </span>
+            <span className="padding">
+              <BuySell />
+            </span>
+          </span>
         </div>
-      </React.StrictMode>
+        <div style={{ width: "110%" }}>
+          <span className="donut">
+            <Donut />
+          </span>
+        </div>
+      </div>
+    </React.StrictMode>
   );
 }
 
